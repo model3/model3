@@ -1,5 +1,7 @@
 <?php
 
+namespace Model3;
+
 /**
  * Clase Acl, esta clase controlara el acceso al sistema.
  * @package Model3

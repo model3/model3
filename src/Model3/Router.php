@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3;
+
 /**
 * Clase Router del M3
 *

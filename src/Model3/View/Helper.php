@@ -1,5 +1,7 @@
 <?php
 
+namespace Model3\View;
+
 /**
  * Clase View_Helper del M3
  *

@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3;
+
 /**
 * Clase Registry del M3
 *

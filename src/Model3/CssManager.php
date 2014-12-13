@@ -1,5 +1,7 @@
 <?php
 
+namespace Model3;
+
 /**
  * Clase CssManager para el uso de los CSS del sistema
  * @package Model3

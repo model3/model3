@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3;
+
 /**
 * Clase FileSystem, para M3
 *

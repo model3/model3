@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3\Db;
+
 /**
  * Table_Adapter
  *

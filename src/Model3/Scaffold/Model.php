@@ -1,5 +1,7 @@
 <?php
 
+namespace Model3\Scaffold;
+
 class Model3_Scaffold_Model
 {
 

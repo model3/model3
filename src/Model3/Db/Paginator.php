@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3\Db;
+
 /**
 * Clase Paginator, para el M3
 *

@@ -1,5 +1,7 @@
 <?php
 
+namespace Model3;
+
 /**
  * Clase JsManager, para el M3
  *

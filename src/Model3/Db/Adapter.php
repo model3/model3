@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3\Db;
+
 /**
 * Capa de abstracta de datos
 *

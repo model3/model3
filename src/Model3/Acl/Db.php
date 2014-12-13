@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3\Acl;
+
 /*
  * Created on 07/10/2009
  *

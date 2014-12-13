@@ -1,5 +1,7 @@
 <?php
 
+namespace Model3;
+
 /**
  * Clase Auth, esta clase auntentifica al usuario en el sistema.
  * @package Model3

@@ -1,5 +1,7 @@
 <?php
 
+namespace Model3;
+
 /**
  * Clase View del Model3PHP
  *

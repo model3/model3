@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3;
+
 /**
 * Clase para redimensionar la imagen del usuario
 *
@@ -46,7 +49,7 @@ class Model3_Img{
 	}
 	
 	/**
-	* Este metodo recibe tres parametros ancho y alto para acomdarse a diferentes tamaños de imagenes, ademas de el 
+	* Este metodo recibe tres parametros ancho y alto para acomdarse a diferentes tamaï¿½os de imagenes, ademas de el 
 	* nombre de la imagen que resulta...
 	*/
 	public function redimensionarImagen($ancho, $alto, $imagen)
@@ -87,7 +90,7 @@ class Model3_Img{
             }
 		
 		}
-        else /**si la imagen es más pequeña que los límites la dejo igual.*/		 
+        else /**si la imagen es mï¿½s pequeï¿½a que los lï¿½mites la dejo igual.*/		 
         {
             $nuevo_alto = $alto;
             $nuevo_ancho = $ancho;
@@ -96,26 +99,26 @@ class Model3_Img{
 		* dependiendo del tipo de imagen tengo que usar diferentes funciones
 		*/
 		switch ($tipo_imagen) {
-            case 1: //si es gif …
+            case 1: //si es gif ï¿½
                 $imagen_nueva = imagecreate($nuevo_ancho, $nuevo_alto);
                 $imagen_vieja = imagecreatefromgif($this->imagen);
-               //cambio de tamaño…
+               //cambio de tamaï¿½oï¿½
                 imagecopyresampled($imagen_nueva, $imagen_vieja, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
                 if (!imagegif($imagen_nueva, $nombre_imagen_asociada)) return false;#
             	break;
 
-			case 2: //si es jpeg …
+			case 2: //si es jpeg ï¿½
                 $imagen_nueva = imagecreatetruecolor($nuevo_ancho, $nuevo_alto);
                 $imagen_vieja = imagecreatefromjpeg($this->imagen);
-                //cambio de tamaño…
+                //cambio de tamaï¿½oï¿½
                 imagecopyresampled($imagen_nueva, $imagen_vieja, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
                 if (!imagejpeg($imagen_nueva, $nombre_imagen_asociada)) return false;
             	break;
 
-			case 3: //si es png …
+			case 3: //si es png ï¿½
                 $imagen_nueva = imagecreatetruecolor($nuevo_ancho, $nuevo_alto);
                 $imagen_vieja = imagecreatefrompng($this->imagen);
-                //cambio de tamaño…
+                //cambio de tamaï¿½oï¿½
                 imagecopyresampled($imagen_nueva, $imagen_vieja, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
                	if (!imagepng($imagen_nueva, $nombre_imagen_asociada)) return false;
            		break;
@@ -153,26 +156,26 @@ class Model3_Img{
 		* dependiendo del tipo de imagen tengo que usar diferentes funciones
 		*/
 		switch ($tipo_imagen) {
-            case 1: //si es gif …
+            case 1: //si es gif ï¿½
                 $imagen_nueva = imagecreate($nuevo_ancho, $nuevo_alto);
                 $imagen_vieja = imagecreatefromgif($this->imagen);
-               //cambio de tamaño…
+               //cambio de tamaï¿½oï¿½
                 imagecopyresampled($imagen_nueva, $imagen_vieja, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
                 if (!imagegif($imagen_nueva, $nombre_imagen_asociada)) return false;#
             	break;
 
-			case 2: //si es jpeg …
+			case 2: //si es jpeg ï¿½
                 $imagen_nueva = imagecreatetruecolor($nuevo_ancho, $nuevo_alto);
                 $imagen_vieja = imagecreatefromjpeg($this->imagen);
-                //cambio de tamaño…
+                //cambio de tamaï¿½oï¿½
                 imagecopyresampled($imagen_nueva, $imagen_vieja, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
                 if (!imagejpeg($imagen_nueva, $nombre_imagen_asociada)) return false;
             	break;
 
-			case 3: //si es png …
+			case 3: //si es png ï¿½
                 $imagen_nueva = imagecreatetruecolor($nuevo_ancho, $nuevo_alto);
                 $imagen_vieja = imagecreatefrompng($this->imagen);
-                //cambio de tamaño…
+                //cambio de tamaï¿½oï¿½
                 imagecopyresampled($imagen_nueva, $imagen_vieja, 0, 0, 0, 0, $nuevo_ancho, $nuevo_alto, $ancho, $alto);
                	if (!imagepng($imagen_nueva, $nombre_imagen_asociada)) return false;
            		break;

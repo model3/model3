@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3;
+
 /**
 * Clase Loader, para el M3
 *

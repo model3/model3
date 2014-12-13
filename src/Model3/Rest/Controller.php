@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3\Rest;
+
 /**
  * Clase Page, para el M3
  *

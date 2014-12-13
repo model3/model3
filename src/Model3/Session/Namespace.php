@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3\Session;
+
 class Model3_Session_Namespace
 {
     protected $_name;

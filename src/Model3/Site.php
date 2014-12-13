@@ -1,5 +1,7 @@
 <?php
 
+namespace Model3;
+
 /**
  * Clase Model3_Site del Model3PHP
  *

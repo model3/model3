@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3;
+
 /**
 * Clase HtmlFactory, para el M3
 *

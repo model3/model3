@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3\Site;
+
 /**
  * Clase Bootstrap del M3
  *

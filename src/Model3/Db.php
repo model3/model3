@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3;
+
 /**
 * Capa de datos, para el proyecto multinivel "VOIP Life"
 *

@@ -1,5 +1,7 @@
 <?php
 
+namespace Model3\Validator;
+
 /**
 * Clase Validator_Element del M3
 *

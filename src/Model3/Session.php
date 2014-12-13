@@ -1,4 +1,7 @@
 <?php
+
+namespace Model3;
+
 class Model3_Session
 {
     public static function start()
