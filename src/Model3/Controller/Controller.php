@@ -1,33 +1,33 @@
 <?php
 
-namespace Model3;
+namespace Model3\Controller;
 
-/**
- * Clase Page, para el M3
- *
- * Esta clase obtiene todas las acciones del controlador de pagina
- * @package Model3
- * @author Hector Benitez
- * @version 0.3
- */
-abstract class Model3_Controller
+use Model3\Exception\Model3Exception;
+use Model3\Registry\Registry;
+use Model3\Request\Request;
+use Model3\View\View;
+
+abstract class Controller
 {
 
     /**
      *
-     * @var Model3_View
+     * @var View
      */
     protected $view;
 
     /**
      *
-     * @var Model3_Request
+     * @var Request
      */
     protected $_request;
 
+    /**
+     * @param $request Request
+     */
     public function __construct($request)
     {
-        $this->view = new Model3_View($request);
+        $this->view = new View($request);
 
         $this->_request = $request;
         if ($request->isComponent())
@@ -53,9 +53,10 @@ abstract class Model3_Controller
     }
 
     /**
-     * Esta clase carga el despachador de acciones
-     * @param $action La accion a cargar
-     * @return bool Regresa true si la accion fue cargada , caso contrario false
+     *
+     * @throws Model3Exception
+     * @internal param
+     * @return bool
      */
     public function dispatch()
     {
@@ -69,9 +70,8 @@ abstract class Model3_Controller
             return true;
         } else
         {
-            throw new Exception("Action '{$method}' is not defined in class " . get_class($this));
+            throw new Model3Exception("Action '{$method}' is not defined in class " . get_class($this));
         }
-        return false;
     }
 
     public function getView()
@@ -81,7 +81,7 @@ abstract class Model3_Controller
 
     /**
      *
-     * @return Model3_Request
+     * @return Request
      */
     public function getRequest()
     {
@@ -92,7 +92,7 @@ abstract class Model3_Controller
     {
         $fullPath = $path;
         
-        $config = Model3_Registry::get('config');
+        $config = Registry::get('config');
         $configData = $config->getArray();
         if ($configData['m3_internationalization']['inter_multilang'] == true)
         {

@@ -2,16 +2,7 @@
 
 namespace Model3\Validator;
 
-/**
-* Clase Validator_Form del M3
-*
-* 
-* @author Hector Benitez
-* @version 1.0
-* @copyright 2009 Hector Benitez
-*/
-
-class Model3_Validator_Form
+class Form
 {
 	const REQUIRED = 1;
 	const MAXLENGTH = 2;
@@ -52,32 +43,17 @@ class Model3_Validator_Form
 		$this->_defaultErrors[self::EQUALTO] = 'Los campos %s y %s deben coincidir';
 	}
 	
-   /*
-	* Agrega las validaciones al form
-	* @param $variable
-	* @param $type
-	* @param $parameters
-	* @param $error
-	*/
 	function addValidation($variable, $type, $parameters = NULL, $error = '')
 	{
-		$validatorInput = new Model3_Validator_Element($variable, $type, $parameters, $error);
+		$validatorInput = new Element($variable, $type, $parameters, $error);
 		array_push($this->_validators, $validatorInput);
 	}
 	
-   /*
-	* Obtiene los errores de la validacion
-	* @return $this->_errors
-	*/
     function getErrors()
     {
         return $this->_errors;
     }
 
-   /*
-    * Valida el formulario
-    * @return bool $valid Regresa true si los datos en el form son validos, caso contrario false
-    */
     function validateForm()
     {
         $valid = true;
@@ -106,13 +82,6 @@ class Model3_Validator_Form
         return $valid;
     }
 
-   /*
-    * Valida los objetos
-    * @param $validator
-    * @param $formVariables
-    * @param &$errorString
-    * @return bool $valid Regresa true si los datos en el form son validos, caso contrario false
-    */
     function validateObject($validator, $formVariables, &$errorString)
     {
         $valid = true;
@@ -146,16 +115,6 @@ class Model3_Validator_Form
         return $valid;
     }
 	
-   /*
-    * Valida los comandos
-    * @param $command
-    * @param $parameters
-    * @param $inputValue
-    * @param $defaultMsg
-    * @param $variableName
-    * @param $formVariables
-    * @return bool $valid Regresa true si los datos en el form son validos, caso contrario false
-    */
     function validateCommand($command, $parameters, $inputValue, &$defaultMsg, $variableName,$formVariables)
     {
         $valid = true;
@@ -282,14 +241,7 @@ class Model3_Validator_Form
         }
         return $valid;
     }
-    
-   /*
-	* Valida los campos requeridos
-	* @param $inputValue
-	* @param $defaultMsg
-	* @param $variableName
-	* @return bool $valid Regresa true si los datos en el form son validos, caso contrario false
-	*/	
+
 	function validRequired($inputValue, &$defaultMsg, $variableName)
 	{
 		$valid = true;
@@ -301,14 +253,6 @@ class Model3_Validator_Form
 	  	return $valid;
 	}
 
-   /*
-	* Valida la longitud max de los campos
-	* @param $inputValue
-	* @param $maxLen
-	* @param $variableName
-	* @param $defaultMsg
-	* @return bool $valid Regresa true si los datos en el form son validos, caso contrario false
-	*/	
 	function validMaxLen($inputValue, $maxLen, $variableName, &$defaultMsg)
 	{
 		$valid = true;
@@ -321,14 +265,6 @@ class Model3_Validator_Form
 		return $valid;
 	}
 
-   /*
-	* Valida la longitud min de los campos
-	* @param $inputValue
-	* @param $minLen
-	* @param $variableName
-	* @param $defaultMsg
-	* @return bool $valid Regresa true si los datos en el form son validos, caso contrario false
-	*/	
 	function validMinLen($inputValue, $minLen, $variableName, &$defaultMsg)
 	{
 		$valid = true;
@@ -341,12 +277,6 @@ class Model3_Validator_Form
 		return $valid;
 	}
 
-   /*
-	* 
-	* @param $inputValue
-	* @param $regExp
-	* @return bool Regresa true si los datos en el form son validos, caso contrario false
-	*/	
 	function testDatatype($inputValue, $regExp)
 	{
             if(preg_match($regExp, $inputValue))
@@ -356,25 +286,11 @@ class Model3_Validator_Form
             return true;
 	}
 
-   /*
-	* Valida los campos email del form
-	* @param $email
-	* @return preg_match("^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$", $email)
-	*/	
 	function validateEmail($email) 
 	{
 		return preg_match("^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$^", $email);
 	}
 
-   /*
-	* 
-	* @param $value1
-	* @param $value2
-	* @param $name1
-	* @param $name2
-	* @param $defaultMsg
-	* @return bool Regresa true si los datos en el form son validos, caso contrario false
-	*/
 	function validEqualTo($value1, $value2, $name1, $name2, &$defaultMsg)
 	{
 		if($value1 === $value2)

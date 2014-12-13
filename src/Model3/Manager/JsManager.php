@@ -1,15 +1,8 @@
 <?php
 
-namespace Model3;
+namespace Model3\Manager;
 
-/**
- * Clase JsManager, para el M3
- *
- * @package Model3
- * @author Hector Benitez
- * @version 0.3
- */
-class Model3_JsManager
+class JsManager
 {
 
     /**

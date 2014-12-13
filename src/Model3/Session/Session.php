@@ -1,15 +1,16 @@
 <?php
 
-namespace Model3;
+namespace Model3\Session;
 
-class Model3_Session
+use Model3\Exception\Model3Exception;
+
+class Session
 {
     public static function start()
     {
-        if(sessionExist())
+        if(Session::sessionExist())
         {
-            require_once 'Model3/Exception.php';
-            throw new Model3_Exception('Session already exist');
+            throw new Model3Exception('Session already exist');
         }
         return session_start();
     }

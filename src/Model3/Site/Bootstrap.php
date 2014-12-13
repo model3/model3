@@ -2,15 +2,7 @@
 
 namespace Model3\Site;
 
-/**
- * Clase Bootstrap del M3
- *
- * Esta clase simplemente ayuda al arranque
- * @author Hector Benitez
- * @version 1.0
- * @copyright 2008 Hector Benitez
- */
-class Model3_Site_Bootstrap
+class Bootstrap
 {
     public function init()
     {

@@ -2,12 +2,9 @@
 
 namespace Model3\Rest;
 
-/**
- * Description of REST_Request
- *
- * @author BetoR
- */
-class Model3_Rest_Request extends Model3_Request
+use Model3\Request\Request as Model3Request;
+
+class Request extends Model3Request
 {
     protected $_method;
     protected $_accepted;
@@ -20,13 +17,11 @@ class Model3_Rest_Request extends Model3_Request
         $this->_params = array();
         $this->_method = strtolower($_SERVER['REQUEST_METHOD']);
         $this->_accepted = isset($_SERVER['HTTP_ACCEPT'])?$_SERVER['HTTP_ACCEPT']:'xml';
-        //(strpos($_SERVER['HTTP_ACCEPT'], 'json')) ? 'json' : 'xml';
 
         if(isset($path[0]))
         {
             $route= $path[0];
 
-            // Se debe limpiar de caracteres no validos...
             $route= rtrim($path[0], '/');
             $routeParts = preg_split('/\//',$route);
 

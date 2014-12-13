@@ -1,12 +1,12 @@
 <?php
 
-namespace Model3;
+namespace Model3\Request;
 
-class Model3_Plugin
+class Plugin
 {
     /**
      *
-     * @param Model3_Request $request
+     * @param Request $request
      */
     public function onPreDispatch($request)
     {
@@ -15,7 +15,7 @@ class Model3_Plugin
 
     /**
      *
-     * @param Model3_Request $request
+     * @param Request $request
      */
     public function onPostDispatch($request)
     {

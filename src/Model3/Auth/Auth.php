@@ -1,22 +1,17 @@
 <?php
 
-namespace Model3;
+namespace Model3\Auth;
 
-/**
- * Clase Auth, esta clase auntentifica al usuario en el sistema.
- * @package Model3
- * @author Hector Benitez
- * @version 0.3
- * @copyright 2010 Hector Benitez
- */
-class Model3_Auth
+use Model3\Registry\Registry;
+
+class Auth
 {
 
     protected $_config;
 
     public function __construct()
     {
-        $registry = Model3_Registry::getInstance();
+        $registry = Registry::getInstance();
         $config = $registry->get('config');
         $this->_config = $config->getArray();
         $this->_config = $this->_config['user_data'];
@@ -29,14 +24,14 @@ class Model3_Auth
     }
 
     /**
-     * Autentifica al usuario en el sistema por medio de su username y password
-     * @param string $user El username del usuario
-     * @param string $pass El password del usuario
-     * @return bool|Regresa true si los datos del usuario son validos en la BD, en caso de fallar regresa false
+     *
+     * @param string $user
+     * @param string $pass
+     * @return bool
      */
     public function authenticate($user, $pass)
     {
-        $dbs = Model3_Registry::getInstance()->get('databases');
+        $dbs = Registry::getInstance()->get('databases');
         $em = $dbs[$this->_config['cnx']];
         /* @var $em Doctrine\ORM\EntityManager */
         
@@ -54,10 +49,9 @@ class Model3_Auth
     }
 
     /**
-     * Obtiene la informacion del usuario auntentificado en el sistema
-     * @param string $element la informacion especifica del usuario
-     * @return $_SESSION['__M3']['Credentials'] o $_SESSION['__M3']['Credentials'][$element] | Si element es null regresa
-     * toda la informacion del usuario  en caso contrario la que se le especifico en $element
+     *
+     * @param string $element
+     * @return $_SESSION['__M3']['Credentials'] o $_SESSION['__M3']['Credentials'][$element]
      */
     public static function getCredentials($element = null)
     {
@@ -71,17 +65,11 @@ class Model3_Auth
             return $_SESSION['__M3']['Credentials'][$element];
     }
 
-    /**
-     * Borra toda la informacion del usuario en las variables de sesion
-     */
     public static function deleteCredentials()
     {
         unset($_SESSION['__M3']['Credentials']);
     }
 
-    /**
-     * Verifica si el usuario esta auntentificado en el sistema
-     */
     public static function isAuth()
     {
         return isset($_SESSION['__M3']['Credentials']);
@@ -90,7 +78,7 @@ class Model3_Auth
     public static function refreshCredentials($user, $pass)
     {
         self::deleteCredentials();
-        $auth = new Model3_Auth();
+        $auth = new Auth();
         return $auth->authenticate($user, $pass);
     }
 

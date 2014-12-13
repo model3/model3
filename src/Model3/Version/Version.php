@@ -2,17 +2,12 @@
 
 namespace Model3;
 
-/**
- * Description of Version
- *
- * @author hector
- */
-final class Model3_Version
+final class Version
 {
     /**
      * Model3PHP Framework version identification - see compareVersion()
      */
-    const VERSION = '0.3.1';
+    const VERSION = '2.0';
 
     /**
      * Compare the specified Model3PHP Framework version string $version

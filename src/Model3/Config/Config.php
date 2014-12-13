@@ -1,8 +1,10 @@
 <?php
 
-namespace Model3;
+namespace Model3\Config;
 
-class Model3_Config
+use Model3\Exception\Model3Exception;
+
+class Config
 {
 	private $_configArray;
 	
@@ -10,8 +12,7 @@ class Model3_Config
 	{
 		if (empty($filename)) 
 		{
-            require_once 'Model3/Exception.php';
-            throw new Model3_Exception('No se especifico un nombre de archivo');
+            throw new Model3Exception('Missing filename');
         }
 		$this->_configArray = parse_ini_file($filename, true);		
 	}

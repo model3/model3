@@ -2,19 +2,15 @@
 
 namespace Model3\Db;
 
-/**
-* Capa de abstracta de datos
-*
-* Esta clase especifica una capa de datos abstracta basada en MySQL Server 5.x
-* @package VoIP-Life
-* @subpackage General
-* @author Hector Benitez
-* @version 1.0
-* @copyright 2008 Hector Benitez
-*/
-abstract class Model3_Db_Adapter
+use Model3\Exception\Model3Exception;
+
+abstract class Adapter
 {
 	protected static $_defaultDb;
+
+	/**
+	 * @var Db
+	 */
 	protected $_db;
 	protected $_error;
 
@@ -23,8 +19,7 @@ abstract class Model3_Db_Adapter
 		if($db == null)
 			if(self::$_defaultDb == null)
 			{
-            	require_once 'Model3/Exception.php';
-            	throw new Model3_Exception('No se encuentra la Base de Datos');
+            	throw new Model3Exception('Database not found');
         	}
 			else
 				$this->_db = self::$_defaultDb;
@@ -39,8 +34,8 @@ abstract class Model3_Db_Adapter
         $this->_db->connect();
     }
 	/**
-    * Obtiene el error en un string de la consulta ejecutada en la BD
-	* @return $this->_db->errorStr()| Regresa el error de la consulta ejecutada en la BD en caso de fallo
+    *
+	* @return $this->_db->errorStr()
     */
 	public function getErrorStr()
 	{
@@ -48,36 +43,37 @@ abstract class Model3_Db_Adapter
 	}
 	
 	/**
-    * Obtiene el error de la consulta ejecutada en la BD
-	* @return $this->_db->_error()| Regresa el error de la consulta ejecutada en la BD en caso de fallo
+    *
+	* @return $this->_db->_error()
     */
 	public function getError()
 	{
 		return $this->_error;
 	}
-	
+
 	/**
-    * Obtiene el error de la consulta ejecutada en la BD
-	* @return $this->_db->_error()| Regresa el error de la consulta ejecutada en la BD en caso de fallo
-    */
+	 *
+	 * @param $db
+	 * @return $this ->_db->_error()
+	 */
 	public static final function setDefaultAdapter($db)
     {
         self::$_defaultDb = $db;
     }
 	
 	/**
-    * Para evitar el SQLInjection
-	* @param $cadena la cadena para hacer los escapes de caracteres
-	* @return $this->_db->escape($cadena)| Regresa la cadena correcta para mysql y evitar SQLInjection
+    *
+	* @param $string
+	* @return $this->_db->escape($string)
     */
-	public function escape($cadena)
+	public function escape($string)
 	{
-		return $this->_db->escape($cadena);
+		return $this->_db->escape($string);
 	}
 	
 	/**
-    * Obtiene el ultimo id insertado en la bd
-	* @return $this->_db->insertId() | Regresa el ultimo id insertado en la bd
+    *
+	* @return $this->_db->insertId()
     */
 	public function insertId()
 	{
@@ -85,7 +81,7 @@ abstract class Model3_Db_Adapter
 	}
 	
 	 /**
-         * El parametro data va por referencia
+         *
          * @param array $data
          * @return bool
          */

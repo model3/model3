@@ -2,13 +2,9 @@
 
 namespace Model3\Db;
 
-/**
- * Table_Adapter
- *
- * @method mixed findBy*(mixed $value) magic finders; @see __call()
- * @method mixed findOneBy*(mixed $value) magic finders; @see __call()
- */
-class Model3_Db_Table extends Model3_Db_Paginator
+use Model3\Exception\Model3Exception;
+
+class Table extends Paginator
 {
 	protected $_tableName;
 	protected $_primaryKey;
@@ -23,19 +19,20 @@ class Model3_Db_Table extends Model3_Db_Paginator
 			->setTableName($tableName)
             ->setRowClass('Model3_Db_Row');
         if(!$this->describe())
-            throw new Exception("La tabla $tableName no se pudo inicializar");
+            throw new Model3Exception("Can not init table $tableName");
         return true;
 	}
 	
     public function  __call($name, $arguments)
     {
+		$method = null;
         $lcMethod = strtolower($name);
-        if(substr($lcMethod, 0, 6) == 'findby')
+        if(substr($lcMethod, 0, 6) == 'findBy')
         {
             $by = substr($name, 6, strlen($name));
             $method = 'find';
         }
-        else if(substr($lcMethod, 0, 9) == 'findoneby')
+        else if(substr($lcMethod, 0, 9) == 'findOneBy')
         {
             $by = substr($name, 9, strlen($name));
             $method = 'findOne';
@@ -65,7 +62,7 @@ class Model3_Db_Table extends Model3_Db_Paginator
 		return $this->_tableName;
 	}
 	
-	public function getPrimaryKey($primaryKey)
+	public function getPrimaryKey()
 	{
 		return $this->_primaryKey;
 	}
@@ -168,16 +165,13 @@ class Model3_Db_Table extends Model3_Db_Paginator
 			if($valid == true)
 			{
 				$this->_query = 'INSERT INTO '.$this->_tableName.'('.$fields.') VALUES('.$values.')';
-				//var_dump($this->_query);
 				if($this->_db->execute($this->_query) !== false)
 				{
-					//echo 'entro';
 					return $this->_db->insertId();
 				}
 				else
 				{
 					$this->_error = $this->_db->errorStr();
-					//echo $this->_error;
 				}
 			}
 		}
@@ -401,7 +395,6 @@ class Model3_Db_Table extends Model3_Db_Paginator
 		return $setParams;
 	}
 	
-	//TODO crear validacion del arreglo data, tanto para este metodo como para insert
     public function update($key, $values, $data)
     {
         if(is_array($values) == false)

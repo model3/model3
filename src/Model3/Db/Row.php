@@ -2,7 +2,7 @@
 
 namespace Model3\Db;
 
-class Model3_Db_Row
+class Row
 {
 	protected $_data;
 	

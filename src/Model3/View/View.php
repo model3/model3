@@ -1,16 +1,13 @@
 <?php
 
-namespace Model3;
+namespace Model3\View;
 
-/**
- * Clase View del Model3PHP
- *
- * @package Model3
- * @author Hector Benitez
- * @version 0.3
- * @copyright 2011 Hector Benitez
- */
-class Model3_View
+use Model3\Exception\Model3Exception;
+use Model3\Manager\CssManager;
+use Model3\Manager\JsManager;
+use Model3\Request\Request;
+
+class View
 {
 
     /**
@@ -39,19 +36,19 @@ class Model3_View
 
     /**
      *
-     * @var Model3_HtmlFactory
+     * @var HtmlFactory
      */
     private $_htmlFactory;
 
     /**
      *
-     * @var Model3_CssManager
+     * @var CssManager
      */
     private $_cssManager;
 
     /**
      *
-     * @var Model3_JsManager
+     * @var JsManager
      */
     private $_jsManager;
 
@@ -69,7 +66,7 @@ class Model3_View
 
     /**
      *
-     * @var Model3_Request
+     * @var Request
      */
     private $_request;
 
@@ -91,9 +88,9 @@ class Model3_View
     public function __construct($request)
     {
         $this->_request = $request;
-        $this->_htmlFactory = new Model3_HtmlFactory;
-        $this->_cssManager = new Model3_CssManager;
-        $this->_jsManager = new Model3_JsManager;
+        $this->_htmlFactory = new HtmlFactory();
+        $this->_cssManager = new CssManager;
+        $this->_jsManager = new JsManager;
         $this->_useTemplate = true;
         $this->_properties = array();
         $this->_helpers = array();
@@ -102,21 +99,10 @@ class Model3_View
         $this->setBaseUrlPublic($request->getBaseUrl());
     }
 
-    /*
-     * Metodo magico set
-     * @param $property
-     * @param $value
-     */
-
     public function __set($property, $value)
     {
         $this->_properties[$property] = $value;
     }
-
-    /*
-     * Metodo magico get
-     * @param $property
-     */
 
     public function __get($property)
     {
@@ -124,13 +110,6 @@ class Model3_View
             return $this->_properties[$property];
         return NULL;
     }
-
-    /*
-     * Metodo magico call
-     * @param $method
-     * @param $arguments
-     * @return $this->_properties[$method]
-     */
 
     public function __call($method, $arguments)
     {
@@ -142,72 +121,40 @@ class Model3_View
         return $this->_helpers[$method];
     }
 
-    /*
-     * Metodo helper
-     * @param string $helper Nombre del Helper
-     * @param array|null $options Arreglo de opciones, solo se utiliza para inicialización
-     * @return Model3_View_Helper
-     */
-
     public function helper($helper, $options = null)
     {
         if (!array_key_exists($helper, $this->_helpers))
         {
             $class = 'View_Helper_' . $helper;
             $this->_helpers[$helper] = new $class($this, $options);
-            if (!($this->_helpers[$helper] instanceof Model3_View_Helper))
+            if (!($this->_helpers[$helper] instanceof Helper))
             {
-                throw new Exception('The class ' . $class . ' is not a instance of Model3_View_Helper');
+                throw new Model3Exception('The class ' . $class . ' is not a instance of Model3_View_Helper');
             }
         }
         return $this->_helpers[$helper];
     }
-
-    /*
-     * Funcion para obtener los elementos del HTMLFactory
-     * @return $this->_htmlFactory
-     */
 
     public function getFactory()
     {
         return $this->_htmlFactory;
     }
 
-    /**
-     * Funcion para obtener los elementos del CSSManager
-     * @return Model3_CssManager
-     */
     public function getCssManager()
     {
         return $this->_cssManager;
     }
 
-    /**
-     * Funcion para obtener los elementos del JsManager
-     * @return Model3_JsManager
-     */
     public function getJsManager()
     {
         return $this->_jsManager;
     }
-
-    /*
-     * Coloca el template de la vista
-     * @param $template
-     */
 
     public function setTemplate($template)
     {
         $this->_template = $template;
     }
 
-    /**
-     * Regresa el tamplate de la vista
-     * Recibe el template general como parametro, en caso de no tener un template particular,
-     * regresa el parametro...
-     * @param $template
-     * @return
-     */
     public function getTemplate($template = NULL)
     {
         if (!$this->_useTemplate)
@@ -217,33 +164,16 @@ class Model3_View
         return $this->_template;
     }
 
-    /*
-     * Usa el template de la vista
-     * @param $use
-     */
-
     public function setUseTemplate($use)
     {
         $this->_useTemplate = $use;
     }
-
-    /*
-     * Link a una pagina
-     * @param $route
-     * @return Model3_Site::baseUrl().$route
-     */
 
     public function linkTo($route = '')
     {
         return $this->_baseUrl . $route;
     }
 
-    /**
-     *
-     * @param array|null $options
-     * @param bool $propague
-     * @return string
-     */
     public function url($options = null, $propague = false)
     {
         $reset = false;
@@ -410,20 +340,10 @@ class Model3_View
         return $url;
     }
 
-    /*
-     * Base url de la pagina
-     * @return Model3_Site::baseUrl()
-     */
-
     public function setBaseUrl($path)
     {
         $this->_baseUrl = $path;
     }
-
-    /*
-     * Base url de la pagina
-     * @return Model3_Site::baseUrl()
-     */
 
     public function setBaseUrlPublic($path)
     {
@@ -432,42 +352,21 @@ class Model3_View
         $this->_jsManager->setBaseUrl($path);
     }
 
-    /*
-     * Base url de la pagina
-     * @return Model3_Site::baseUrl()
-     */
-
     public function getBaseUrl()
     {
         return $this->_baseUrl;
     }
-
-    /*
-     * Base url de la pagina
-     * @return Model3_Site::baseUrl()
-     */
 
     public function getBaseUrlPublic()
     {
         return $this->_baseUrlPublic;
     }
 
-    /*
-     * Base url de la pagina
-     * @param
-     * @return Model3_Site::baseUrl()
-     */
-
     public function escape($txt)
     {
         return htmlentities($txt);
     }
 
-    /**
-     * Establece el contenido del tag title para la pagina, y lo regresa en caso de no incluir parametro solo lo regresa
-     * @param string $title
-     * @return string
-     */
     public function headTitle($title = null)
     {
         if ($title != null)
@@ -475,21 +374,11 @@ class Model3_View
         return '<title>' . $this->_title . '</title>' . PHP_EOL;
     }
 
-    /**
-     *
-     * @param int $type
-     * @param string $value
-     * @param string $content
-     */
     public function addMeta($type, $value, $content)
     {
         $this->_metas[] = array('type' => $type, 'value' => $value, 'content' => $content);
     }
 
-    /**
-     *
-     * @return string
-     */
     public function headMeta()
     {
         $result = '';

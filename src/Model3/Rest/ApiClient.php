@@ -2,12 +2,9 @@
 
 namespace Model3\Rest;
 
-/**
- * Description of REST_Request
- *
- * @author BetoR
- */
-class Model3_Rest_ApiClient
+use Model3\Exception\Model3Exception;
+
+class ApiClient
 {
     protected $_accepted;
     protected $_apiKey;
@@ -23,11 +20,11 @@ class Model3_Rest_ApiClient
 //        $result = 'valid';
         if( $result === false )
         {
-            throw new Exception( 'Error while validating api key: Can\'t do curl' );
+            throw new Model3Exception( 'Error while validating api key: Can\'t do curl' );
         }
         else if( $result != 'valid' )
         {
-            throw new Exception( 'Error while validating api key: '.$result );
+            throw new Model3Exception( 'Error while validating api key: '.$result );
         }
     }
 
@@ -107,7 +104,7 @@ class Model3_Rest_ApiClient
         return $ret;
     }
 
-    public function convertToArray( SimpleXMLElement $xmlElement )
+    public function convertToArray( \SimpleXMLElement $xmlElement )
     {
         $ret = array();
         foreach($xmlElement->children() as $key=>$value)

@@ -1,27 +1,18 @@
 <?php
 
-namespace Model3;
+namespace Model3\View;
 
-/**
-* Clase HtmlFactory, para el M3
-*
-* Esta clase crea elementos HTML 
-* @package LIFE
-* @author Octavio Cortés
-* @version 1.0
-*/
-
-class Model3_HtmlFactory
+class HtmlFactory
 {
 	private $htmlElements;
 	private $db;
 	private $error;
 	
 	/**
-	* Inserta elemento html
-	* @param string $elementName nombre del elemento html
-	* @param string $elementType tipo del elemento
-	* @return int Regrea 1 si se inserto correctamente el elemento
+	*
+	* @param string $elementName
+	* @param string $elementType
+	* @return int
 	*/
 	private function insertElement( $elementName, $elementType )
 	{
@@ -44,9 +35,9 @@ class Model3_HtmlFactory
 	
 	
 	/**
-	* Coloca la clase Db
-	* @param $db la conexion de la bd
-	* @return bool Regresa truesi la conexion tuvo exito en caso contrario false
+	*
+	* @param $db
+	* @return bool
 	*/
 	public function setDb ( $db )
 	{
@@ -57,12 +48,13 @@ class Model3_HtmlFactory
 		}
 		return false;
 	}
-	
+
 	/**
-	* Busca los elementos dado por el parametro $elementSearch
-	* @param string $elementSearch elemento a buscar
-	* @return $elementFound Regresa el elemento encontrado caso contrario NULL
-	*/
+	 *
+	 * @param $elementToSearch
+	 * @internal param string $elementSearch
+	 * @return $elementFound
+	 */
 	public function getElement( $elementToSearch )
 	{
 		if ( !isset($elementToSearch) )
@@ -79,18 +71,17 @@ class Model3_HtmlFactory
 		}
 		return isset($elementFound) ? $elementFound : NULL;
 	}
-	
+
 	/**
-	* Construye sun combobox.
-	* @param string $name el nombre del combobox
-	* @param string $class la clase del estilo
-	* @param array $options las opciones del combobox
-	* @param string $optionSelected el valor seleccionado por default
-	* @return $res El combobox con sus opciones
-	*/
+	 *
+	 * @param string $name
+	 * @param string $class
+	 * @param array $options
+	 * @param string $optionSelected
+	 * @return bool|int $res
+	 */
 	public function setSelect ($name, $class, $options, $optionSelected = NULL)
 	{
-		//se verifica que todos los elementos existan a excepcion de $selectedOption que puede ser NULL
 		if ( !isset($name) || !isset($options) )
 		{
 			echo "Alguno de los elementos proporcionados a <b>\"setSelect\"</b> es NULL";
@@ -117,12 +108,11 @@ class Model3_HtmlFactory
 	
 	
 	/**
-	* Contruye un conjunto de comboboxes con fechas
-	* @param string $dia el nombre del combobox donde se van a visualizar los dias
-	* @param string $mes el nombre del combobox donode se van a visualizar los meses
-	* @param string $anio el nombre del combobox donode se van a visualizar los meses
-	* @param string $fecha No se usa.
-	* @return Regresa el conjunto de comboboxes creados
+	*
+	* @param string $dia
+	* @param string $mes
+	* @param string $anio
+	* @param string $fecha
 	*/
 	public function setDateSelect($dia, $mes, $anio, $fecha = '')
 	{
@@ -146,42 +136,25 @@ class Model3_HtmlFactory
 		$this->setSelect($anio, '', $anios, 1980);
 	}
 	
-	/**
-	* Contruye un <input type='text'>
-	* @param string $name el nombre del elemento
-	* @param string $value el valor del elemento
-	* @param string $size el tamaño del elemento default es 2
-	* @return $res | Regresa el elemento creado
-	*/
 	public function setTextBox ( $name, $value, $size = 2)
 	{
-		//se verifica que todos los elementos existan a excepcion de $selectedValue que puede ser NULL
 		if ( !isset($name) || !isset($value) )
 		{
 			$this->error="Alguno de los elementos proporcionados a <b>\"setTextBox\"</b> es NULL";
 			return false;
 		}
-		//checa si no hay otro elemento con el mismo nombre y en caso de que no haya, inserta el nuevo elemento
 		if ( ( $res = $this->insertElement( $name, "text" ) ) == 1 )
 			echo "<input name=\"$name\" type=\"text\" id=\"$name\" size=\"$size\" value=\"$value\"/>";
 		return $res;			
 	}
 	
-	/**
-	* Contruye un <input type='checkbox'>
-	* @param string $name el nombre del elemento
-	* @param string $checked la propiedad checked del checkbox; Valor por default false
-	* @return $res | Regresa el elemento creado
-	*/
 	public function setCheckBox ( $name, $checked = false )
 	{
-		//se verifica que todos los elementos existan a excepcion de $selectedValue que puede ser NULL
 		if ( !isset($name) || !isset($checked) )
 		{
 			echo "Alguno de los elementos proporcionados a <b>\"setTextBox\"</b> es NULL";
 			return false;
 		}
-		//checa si no hay otro elemento con el mismo nombre y en caso de que no haya, inserta el nuevo elemento
 		if ( ( $res = $this->insertElement( $name, "checkbox" ) ) == 1 )
 			if($checked)
 				echo "<input name=\"$name\" type=\"checkbox\" id=\"$name\" checked/>";
@@ -190,16 +163,8 @@ class Model3_HtmlFactory
 		return $res;
 	}
 	
-	/**
-	* Contruye un conjunto de <input type='radio'>
-	* @param string $name el nombre del elemento
-	* @param int $mode checa si es un solo elemento o varios
-	* @param string $optionSelected la propiedad checked del elemento; Valor por default NULL
-	* @return $res | Regresa el elemento creado
-	*/
 	public function setRadio ( $name, $options, $mode = 0 , $optionSelected = NULL )
 	{
-		//se verifica que todos los elementos existan a excepcion de $selectedOption que puede ser NULL
 		if ( !isset($name) || !isset($options) )
 		{
 			echo "Alguno de los elementos proporcionados a <b>\"setRadio\"</b> es NULL";
@@ -223,12 +188,6 @@ class Model3_HtmlFactory
 		return $res;
 	}
 	
-	/**
-	* Contruye un <input type='submit'>
-	* @param string $name el nombre del elemento
-	* @param string $value el valor del elemento
-	* @return $res | Regresa el elemento creado
-	*/
 	public function setSubmit ( $name, $value )
 	{
 		//se verifica que todos los elementos existan 
@@ -244,12 +203,6 @@ class Model3_HtmlFactory
 		return $res;
 	}
 
-	/**
-	* Contruye un <input type='button>
-	* @param string $name el nombre del elemento
-	* @param string $value el valor del elemento
-	* @return $res | Regresa el elemento creado
-	*/
 	public function setButton ( $name, $value )
 	{
 		if ( !isset($name) || !isset($value) )
@@ -264,12 +217,6 @@ class Model3_HtmlFactory
 		return $res;
 	}
 	
-	/**
-	* Contruye un loginBox
-	* @param string $formAction la url del formulario
-	* @param string $value el valor del elemento
-	* @return $res | Regresa el elemento creado
-	*/
 	public function loginBox($formAction)
 	{
 		echo '<div id="divLogin" class="block">
@@ -291,12 +238,6 @@ class Model3_HtmlFactory
             </div>';
 	}
 	
-	
-	/**
-	* Contruye un tabla con celdas de diferente color (even,odd)
-	* @param string $headers el header de la tabla
-	* @param string $data los datos de la tabla
-	*/
 	public function zebraTable($headers, $data)
 	{
 		$cols = count($headers);
@@ -321,12 +262,6 @@ class Model3_HtmlFactory
 		echo '</tr></table>';
 	}
 	
-	/**
-	* Contruye un paginador de datos
-	* @param int $current el elemento actual
-	* @param int $total el total de elementos
-	* @param string $link  el link de los elementos
-	*/
 	public function paginatorControl($current, $total, $link)
 	{
 		if($current > 1)

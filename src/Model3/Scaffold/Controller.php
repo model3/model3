@@ -2,12 +2,14 @@
 
 namespace Model3\Scaffold;
 
-class Model3_Scaffold_Controller extends Model3_Controller
+use Model3\Controller\Controller as Model3Controller;
+
+class Controller extends Model3Controller
 {
 
     /**
      *
-     * @var Model3_Scaffold_Model
+     * @var Model
      */
     protected $_sc;
     protected $_post = null;

@@ -2,15 +2,7 @@
 
 namespace Model3\Db;
 
-/**
-* Clase Paginator, para el M3
-*
-* Esta clase obtiene construye un paginador de datos
-* @package LIFE
-* @author Hector Benitez
-* @version 1.0
-*/
-class Model3_Db_Paginator extends Model3_Db_Adapter
+class Paginator extends Adapter
 {
 	protected $_currentPage;
 	protected $_itemsByPage;
@@ -31,10 +23,8 @@ class Model3_Db_Paginator extends Model3_Db_Adapter
 	}
 	
 	/**
-	* Esta clase coloca la pagina actual
-	* @param int $page La pagina actual
-	* @author Hector Benitez
-	* @version 1.0
+	*
+	* @param int $page
 	*/
 	public function setCurrentPage($page)
 	{
@@ -42,8 +32,8 @@ class Model3_Db_Paginator extends Model3_Db_Adapter
 	}
 	
 	/**
-	* Esta clase coloca los elementos por pagina
-	* @param int $items el numero de elementos por pagina
+	*
+	* @param int $items
 	*/
 	public function setItemsByPage($items)
 	{
@@ -51,8 +41,8 @@ class Model3_Db_Paginator extends Model3_Db_Adapter
 	}
 	
 	/**
-	* Coloca el query para visualizar los datos
-	* @param string $query la consulta a la bd
+	* \
+	* @param string $query
 	*/
 	public function setQuery($query)
 	{
@@ -60,8 +50,8 @@ class Model3_Db_Paginator extends Model3_Db_Adapter
 	}
 	
 	/**
-	* Coloca el numero de elementos del query
-	* @param string $query el string de la consulta a la bd
+	*
+	* @param string $query
 	*/	
 	public function setQueryCount($query)
 	{
@@ -69,21 +59,21 @@ class Model3_Db_Paginator extends Model3_Db_Adapter
 	}
 	
 	/**
-	* Obtiene los elementos del paginador
-	* @return $this->_db->getAllRows() si hay datos en la consulta, caso contrario false
+	*
+	* @return $this->_db->getAllRows()
 	*/
 	public function getItems()
 	{
-		if($consulta = $this->_db->execute($this->_queryCount))
+		if($query = $this->_db->execute($this->_queryCount))
 		{
-			if($result = $this->_db->getRow($consulta, FETCH_ROW))
+			if($result = $this->_db->getRow($query, FETCH_ROW))
 			{
 				$this->_totalItems = $result[0];
 				$this->_totalPages = ceil($this->_totalItems / $this->_itemsByPage);
 				if($this->_currentPage > $this->_totalPages && $this->_totalPages > 0)
 					$this->_currentPage = $this->_totalPages;
-				$query = $this->_query.' LIMIT '.(($this->_currentPage-1)*$this->_itemsByPage).', '.$this->_itemsByPage;
-				if($this->_db->execute($query))
+				$queryString = $this->_query.' LIMIT '.(($this->_currentPage-1)*$this->_itemsByPage).', '.$this->_itemsByPage;
+				if($this->_db->execute($queryString))
 				{
 					return $this->_db->getAllRows();
 				}
@@ -93,7 +83,7 @@ class Model3_Db_Paginator extends Model3_Db_Adapter
 	}
 	
 	/**
-	* Obtiene el total de paginas
+	*
 	* @return $this->_totalPages
 	*/
 	public function getTotalPages()

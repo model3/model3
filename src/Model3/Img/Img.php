@@ -2,56 +2,24 @@
 
 namespace Model3;
 
-/**
-* Clase para redimensionar la imagen del usuario
-*
-* Esta clase especifica unas funciones para redimensionar una imagen JPG,GIF o PNG, basada en una clase hecha por Chris Lopez
-* de Logistic-Apps
-* @package VoIP-Life
-* @subpackage General
-* @author Hector Benitez
-* @version 1.0
-* @copyleft 2009
-*/
-
-/**
-* Clase Images, esta clase controlara las funciones para redimensionar imagenes
-* @package VoIP-Life
-* @subpackage General
-* @author Hector Benitez
-* @version 1.0
-* @copyright 2009
-*/
 ini_set("memory_limit","80M");
-class Model3_Img{
+class Img{
 	
-	/**
-	* variables que contienen el nombre de la imagen , el directorio donde se encuentra 
-	* y el nuevo nombre que se le da despues de redimensionarla
-	*/
 	private $imagen;
 	private $nombre_imagen_asociada;
 	private $directorio;
-	
+
 	/**
-	* constructor de la clase
-	* <code>
-	* <?php
-	* $images = new Images('$nom_imagen);
-	* ?>
-	* </code>
-	* @param string $nom_imagen Nombre de la imagen con su directorio
-	* @param string $dirImagen el directorio donde se va guardar la nueva imagen
-	*/	
+	 *
+	 * @param $image
+	 * @internal param string $nom_imagen
+	 * @internal param string $dirImagen
+	 */
 	public function __construct($image){
 		$this->imagen = $image;
 		$this->nombre_imagen_asociada = basename($image);		
 	}
 	
-	/**
-	* Este metodo recibe tres parametros ancho y alto para acomdarse a diferentes tama�os de imagenes, ademas de el 
-	* nombre de la imagen que resulta...
-	*/
 	public function redimensionarImagen($ancho, $alto, $imagen)
 	{
 		if(($ancho == 0)&&($alto == 0))

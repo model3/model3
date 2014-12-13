@@ -1,23 +1,21 @@
 <?php
 
-namespace Model3;
+namespace Model3\Registry;
 
-/**
-* Clase Registry del M3
-*
-* Esta clase inicializa el registro del modelo
-* @author Hector Benitez
-* @version 1.0
-* @copyright 2009 Hector Benitez
-*/
-class Model3_Registry extends ArrayObject
+use Model3\Exception\Model3Exception;
+
+class Registry extends \ArrayObject
 {
     private static $_registryClassName = 'Model3_Registry';
+
+    /**
+     * @var Registry
+     */
 	private static $_registry = null;
 	
 	/**
-	* Obtiene las instancias del registro
-	* @return Model3_Registry $_registry
+	*
+	* @return Registry $_registry
 	*/
     public static function getInstance()
     {
@@ -28,69 +26,58 @@ class Model3_Registry extends ArrayObject
     }
 
     /**
-	* Coloca las instancias en el registro
-	* @param $registry
-	*/
-	public static function setInstance(Model3_Registry $registry)
+     *
+     * @param Registry $registry
+     * @throws Model3Exception
+     */
+	public static function setInstance(Registry $registry)
     {
         if (self::$_registry !== null) {
-            require_once 'Model3/Exception.php';
-            throw new Model3_Exception('Registry ya esta inicializado');
+            throw new Model3Exception('Registry already initialized');
         }
 
         self::setClassName(get_class($registry));
         self::$_registry = $registry;
     }
 
-    /**
-	* Inicializa el registro
-	*/
     protected static function init()
     {
         self::setInstance(new self::$_registryClassName());
     }
 
-	/**
-	* Coloca el nombre de la clase del registro
-	* @param string $registryClassName Nombre de la clase del registro
-	*/
+    /**
+     *
+     * @param string $registryClassName
+     * @throws Model3Exception
+     */
     public static function setClassName($registryClassName = 'Model3_Registry')
     {
         if (self::$_registry !== null) {
-            require_once 'Model3/Exception.php';
-            throw new Exception('Registry ya esta inicializado');
+            throw new Model3Exception('Registry already initialized');
         }
 
         if (!is_string($registryClassName)) {
-            require_once 'Model3/Exception.php';
-            throw new Exception("El argument no es un nombre de clase");
+            throw new Model3Exception("Not a class name");
         }
-
-        require_once 'Model3/Loader.php';
-        Model3_Loader::loadClass($registryClassName);
-        self::$_registryClassName = $registryClassName;
     }
 
-	/**
-	* Libera la instancia
-	*/
     public static function _unsetInstance()
     {
         self::$_registry = null;
     }
 
-	/**
-	* 
-	* @param string $index
-	* @return $instance->offsetGet($index);
-	*/
+    /**
+     *
+     * @param string $index
+     * @throws Model3Exception
+     * @return mixed $instance->offsetGet($index);
+     */
     public static function get($index)
     {
         $instance = self::getInstance();
 
         if (!$instance->offsetExists($index)) {
-            require_once 'Model3/Exception.php';
-            throw new Model3_Exception("El indice '$index' no esta definido");
+            throw new Model3Exception("Index '$index' is not defined");
         }
 
         return $instance->offsetGet($index);
@@ -109,7 +96,7 @@ class Model3_Registry extends ArrayObject
     }
 
 	/**
-	* Verifica si esta registrado
+	*
 	* @param string $index
 	* @return self::$_registry->offsetExists($index)
 	*/
@@ -122,9 +109,9 @@ class Model3_Registry extends ArrayObject
     }
 
 	/**
-	* Verifica si esta offset existe
+	*
 	* @param string $index
-	* @return array_key_exists($index, $this)
+	* @return bool
 	*/
     public function offsetExists($index)
     {

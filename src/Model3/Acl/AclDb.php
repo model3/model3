@@ -2,20 +2,27 @@
 
 namespace Model3\Acl;
 
-/*
- * Created on 07/10/2009
- *
- * To change the template for this generated file go to
- * Window - Preferences - PHPeclipse - PHP - Code Templates
- */
+use Model3\Db\Table;
+
 define('ACL_DB_ALLOW', 1);
 define('ACL_DB_DENY', 2);
 define('ACL_DB_UNDEFINED', 3);
 
-class Model3_Acl_Db extends Model3_Acl
+class AclDb extends Acl
 {
+	/**
+	 * @var Table
+	 */
 	protected $_usersGroupsTable;
+
+	/**
+	 * @var Table
+	 */
 	protected $_aclPermissionsTable;
+
+	/**
+	 * @var Table
+	 */
 	protected $_resourcesTable;
 	protected $_actualResource;
 	
@@ -31,7 +38,7 @@ class Model3_Acl_Db extends Model3_Acl
 	public function setUsersGroupsTable($usersGroupsTable)
 	{
 		unset($this->_usersGroupsTable);
-		$this->_usersGroupsTable = new Model3_Db_Table($usersGroupsTable);
+		$this->_usersGroupsTable = new Table($usersGroupsTable);
 		return $this;
 	}
 	
@@ -43,7 +50,7 @@ class Model3_Acl_Db extends Model3_Acl
 	public function setAclPermissionsTable($aclPermissionsTable)
 	{
 		unset($this->_aclPermissionsTable);
-		$this->_aclPermissionsTable = new Model3_Db_Table($aclPermissionsTable);
+		$this->_aclPermissionsTable = new Table($aclPermissionsTable);
 		return $this;
 	}
 	
@@ -55,7 +62,7 @@ class Model3_Acl_Db extends Model3_Acl
 	public function setResourcesTable($resourcesTable)
 	{
 		unset($this->_resourcesTable);
-		$this->_resourcesTable = new Model3_Db_Table($resourcesTable);
+		$this->_resourcesTable = new Table($resourcesTable);
 		return $this;
 	}
 	

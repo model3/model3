@@ -1,10 +1,9 @@
 <?php
 
-namespace Model3;
+namespace Model3\Feed;
 
-class Model3_FeedReader
+class Reader
 {
-	// Variables para curl
 	private $_proxyServer;
 	private $_proxyPort;
 	
@@ -16,18 +15,14 @@ class Model3_FeedReader
 	
 	public function getTwitterRss($username,$count = 10)
 	{
-		// Forma la url para twitter
 		$urlTwitter = 'http://twitter.com/statuses/user_timeline/'.$username.'.xml?count='.$count;
-		// Llama getRSS
 		$xml = $this->getRss($urlTwitter);
 		return $xml;
 	}
 
     public function validaTwitterRss($username)
 	{
-		// Forma la url para twitter
 		$urlTwitter = 'http://twitter.com/statuses/user_timeline/'.$username.'.xml';
-		// Llama getRSS
         libxml_use_internal_errors(true);
         $xml = simplexml_load_string($this->getRss($urlTwitter));
         if($xml->error)

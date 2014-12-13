@@ -2,16 +2,10 @@
 
 namespace Model3\Rest;
 
-/**
- * Clase Page, para el M3
- *
- * Esta clase obtiene todas las acciones del controlador de pagina
- * @package LIFE
- * @author Hector Benitez
- * @version 1.0
- */
+use Model3\Controller\Controller as Model3Controller;
+use Model3\View\View;
 
-abstract class Model3_Rest_Controller extends Model3_Controller
+abstract class Controller extends Model3Controller
 {
     public $view;
     protected $_request;
@@ -20,7 +14,7 @@ abstract class Model3_Rest_Controller extends Model3_Controller
 
     public function __construct($request)
     {
-        $this->view = new Model3_View($request);
+        $this->view = new View($request);
 
         $this->_request = $request;
 
@@ -46,9 +40,9 @@ abstract class Model3_Rest_Controller extends Model3_Controller
     }
 
     /**
-     * Esta clase carga el despachador de acciones
-     * @param $action La accion a cargar
-     * @return bool Regresa true si la accion fue cargada , caso contrario false
+     *
+     * @internal param $action
+     * @return bool
      */
     public function dispatch()
     {

@@ -1,19 +1,17 @@
 <?php
 
-namespace Model3;
+namespace Model3\Site;
 
-/**
- * Clase Model3_Site del Model3PHP
- *
- * @package Model3
- * @author Hector Benitez
- * @version 0.3
- * @copyright 2011 Hector Benitez
- */
 use Doctrine\ORM\EntityManager,
     Doctrine\ORM\Configuration;
+use Model3\Config\Config;
+use Model3\Exception\Model3Exception;
+use Model3\Manager\CssManager;
+use Model3\Manager\JsManager;
+use Model3\Registry\Registry;
+use Model3\Request\Request;
 
-class Model3_Site
+class Site
 {
 
     private static $_modules = array();
@@ -21,7 +19,7 @@ class Model3_Site
     private static $_plugins = array();
     /**
      *
-     * @var Model3_Request
+     * @var Request
      */
     private static $_request = null;
 
@@ -66,16 +64,16 @@ class Model3_Site
             }
         }
 
-        Model3_Registry::getInstance()->set('databases', $emanagers);
+        Registry::getInstance()->set('databases', $emanagers);
 
         if (isset($configData['m3_public_settings']['css_dir']))
         {
-            Model3_CssManager::setBaseDir($configData['m3_public_settings']['css_dir']);
+            CssManager::setBaseDir($configData['m3_public_settings']['css_dir']);
         }
 
         if (isset($configData['m3_public_settings']['js_dir']))
         {
-            Model3_JsManager::setBaseDir($configData['m3_public_settings']['js_dir']);
+            JsManager::setBaseDir($configData['m3_public_settings']['js_dir']);
         }
 
         self::clearPluginList();
@@ -87,8 +85,8 @@ class Model3_Site
 
     public static function loadConfigFile($configFile)
     {
-        $config = new Model3_Config($configFile);
-        $registry = Model3_Registry::getInstance();
+        $config = new Config($configFile);
+        $registry = Registry::getInstance();
         $registry->set('config', $config);
 
         return $config;
@@ -96,7 +94,7 @@ class Model3_Site
 
     public static function runController()
     {
-        $registry = Model3_Registry::getInstance();
+        $registry = Registry::getInstance();
         $config = $registry->get('config');
         $carray = $config->getArray();
 
@@ -125,7 +123,7 @@ class Model3_Site
             }
             catch (Exception $e)
             {
-                /* @var $request Model3_Request */
+                /* @var $request Request */
                 self::$_request->setController($carray['general']['error_controller']);
                 self::$_request->setAction($carray['general']['error_action']);
                 $class = self::$_request->getController() . 'Controller';
@@ -158,7 +156,7 @@ class Model3_Site
 
     public static function dispatch($request)
     {
-        $registry = Model3_Registry::getInstance();
+        $registry = Registry::getInstance();
         $config = $registry->get('config');
         $carray = $config->getArray();
         self::$_request = $request;
@@ -206,13 +204,6 @@ class Model3_Site
         echo $output;
     }
 
-    /*
-     * Carga los templates del sitio
-     * @param $view
-     * @param $name
-     * @param $layout
-     */
-
     public static function loadTemplate($view, $layout = NULL)
     {
         if (!empty($layout))
@@ -256,7 +247,7 @@ class Model3_Site
         }
 
         if (!$exists)
-            throw new Exception("View '{$templatefile}' is not found in View/Scripts/ directory.");
+            throw new Model3Exception("View '{$templatefile}' is not found in View/Scripts/ directory.");
 
         if (!empty($layout))
         {
@@ -275,27 +266,17 @@ class Model3_Site
             }
 
             if (!$exists)
-                throw new Exception('Template ' . $layoutfile . ' is not found in View/Layout directory.');
+                throw new Model3Exception('Template ' . $layoutfile . ' is not found in View/Layout directory.');
         }
     }
 
-    /*
-     * La URL base del sitio
-     * @return $carray['general']['url']
-     */
-
     public static function baseUrl()
     {
-        $registry = Model3_Registry::getInstance();
+        $registry = Registry::getInstance();
         $config = $registry->get('config');
         $carray = $config->getArray();
         return $carray['general']['url'];
     }
-
-    /*
-     * Los links del sitio
-     * @return self::baseUrl().$path
-     */
 
     public static function linkTo($path)
     {

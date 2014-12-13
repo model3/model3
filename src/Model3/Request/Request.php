@@ -1,17 +1,11 @@
 <?php
 
-namespace Model3;
+namespace Model3\Request;
 
-/**
- * Clase Router del M3
- *
- * Esta clase obtiene todas las clases, parametros y acciones de las paginas
- * @package Model3
- * @author Hector Benitez
- * @version 0.3
- * @copyright 2008 Hector Benitez
- */
-class Model3_Request
+use Model3\Registry\Registry;
+use Model3\Site\Site;
+
+class Request
 {
 
     const SCHEME_HTTP = 'http';
@@ -25,12 +19,12 @@ class Model3_Request
     protected $_requestUri;
     protected $_baseUrl = null;
     protected $_basePath = null;
-    private $_route;
-    private $_controller;
-    private $_action;
-    private $_params;
-    private $_component;
-    private $_module;
+    protected $_route;
+    protected $_controller;
+    protected $_action;
+    protected $_params;
+    protected $_component;
+    protected $_module;
     protected $_multilang;
     protected $_lang;
 
@@ -51,7 +45,7 @@ class Model3_Request
         $this->_action = 'index';
         $this->_params = array();
 
-        $config = Model3_Registry::get('config');
+        $config = Registry::get('config');
         $configData = $config->getArray();
         $this->_multilang = $configData['m3_internationalization']['inter_multilang'];
         $this->_lang = $configData['m3_internationalization']['inter_default_lang'];
@@ -77,7 +71,7 @@ class Model3_Request
         $this->_component = null;
         if (isset($routeParts[$idx]))
         {
-            $componentes = Model3_Site::getComponentList();
+            $componentes = Site::getComponentList();
             if (in_array($routeParts[$idx], $componentes))
             {
                 $this->_component = $routeParts[$idx];
@@ -88,7 +82,7 @@ class Model3_Request
         $this->_module = null;
         if (isset($routeParts[$idx]))
         {
-            $modulos = Model3_Site::getModuleList();
+            $modulos = Site::getModuleList();
             if (in_array($routeParts[$idx], $modulos))
             {
                 $this->_module = $routeParts[$idx];
@@ -115,7 +109,7 @@ class Model3_Request
     }
 
     /**
-     * Obtiene las paginas
+     *
      * @return $this->controller
      */
     public function getController()
@@ -129,7 +123,7 @@ class Model3_Request
     }
 
     /**
-     * Obtiene las acciones
+     *
      * @return $this->action
      */
     public function getAction()
@@ -145,7 +139,7 @@ class Model3_Request
     }
 
     /**
-     * Obtiene los parametros
+     *
      * @return array
      */
     public function getParams()
@@ -154,8 +148,8 @@ class Model3_Request
     }
 
     /**
-     * Esta clase agrega los parametros mandados por la URL
-     * @param string $params El parametro a agregar
+     *
+     * @param string $params
      */
     public function setParams($params)
     {
@@ -163,9 +157,9 @@ class Model3_Request
     }
 
     /**
-     * Esta clase obtiene los parametros mandados por la URL
-     * @param int $idx el indice del parametro
-     * @return $this->_params[$idx] Regresa el valor del parametro seleccionado
+     *
+     * @param int $idx
+     * @return $this->_params[$idx]
      */
     public function getParam($idx)
     {
@@ -175,8 +169,8 @@ class Model3_Request
     }
 
     /**
-     * Obtiene el numero de parametros
-     * @return count($this->_params) Regresa el numero de parametros, si no tiene params regresa 0
+     *
+     * @return int
      */
     public function numParam()
     {
@@ -186,7 +180,7 @@ class Model3_Request
     }
 
     /**
-     * Obtiene los parametros
+     *
      * @return $this->params
      */
     public function getComponent()
@@ -195,7 +189,7 @@ class Model3_Request
     }
 
     /**
-     * Obtiene los parametros
+     *
      * @return $this->params
      */
     public function isComponent()
@@ -232,7 +226,7 @@ class Model3_Request
     }
 
     /**
-     * Obtiene los parametros
+     *
      * @return $this->params
      */
     public function isModule()
@@ -245,8 +239,8 @@ class Model3_Request
     }
 
     /**
-     * Esta clase checa si los parametros de los formularios son POST
-     * @return bool Regresa true si son POST , caso contrario false
+     *
+     * @return bool
      */
     public function isPost()
     {
@@ -256,8 +250,8 @@ class Model3_Request
     }
 
     /**
-     * Esta clase obtiene todos los parametros tipo POST
-     * @return array Regresa los $_POST de los formularios
+     *
+     * @return array
      */
     public function getPost()
     {
@@ -502,7 +496,7 @@ class Model3_Request
      * Set the base path for the URL
      *
      * @param string|null $basePath
-     * @return Model3_Request
+     * @return Request
      */
     public function setBasePath($basePath = null)
     {

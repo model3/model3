@@ -2,15 +2,7 @@
 
 namespace Model3\View;
 
-/**
- * Clase View_Helper del M3
- *
- *
- * @author Hector Benitez
- * @version 1.0
- * @copyright 2009 Hector Benitez
- */
-class Model3_View_Helper
+class Helper
 {
 	protected $_view;
 

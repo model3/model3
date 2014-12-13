@@ -2,7 +2,7 @@
 
 namespace Model3\Scaffold;
 
-class Model3_Scaffold_Model
+class Model
 {
 
     protected $_model;

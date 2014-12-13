@@ -1,15 +1,8 @@
 <?php
 
-namespace Model3;
+namespace Model3\Manager;
 
-/**
- * Clase CssManager para el uso de los CSS del sistema
- * @package Model3
- * @author Hector Benitez
- * @version 0.03
- * @copyright 2011 Hector Benitez
- */
-class Model3_CssManager
+class CssManager
 {
 
     private static $_baseDir = '';
@@ -42,20 +35,10 @@ class Model3_CssManager
         return $this->_baseUrl;
     }
 
-    /*
-     * Agrega un archivo CSS
-     * @param $script
-     * @param $ignoreBase
-     */
-
     public function addCss($style, $media = 'screen', $ignoreBase = false, $conditional = null)
     {
         $this->_cssArray[] = array('style' => $style, 'media' => $media, 'ignoreBase' => $ignoreBase, 'conditional' => $conditional);
     }
-
-    /*
-     * Carga los java script
-     */
 
     public function hasCss()
     {
@@ -65,9 +48,11 @@ class Model3_CssManager
     }
 
     /**
-     * Funcion para cargar los archivos CSS
      *
      * @param string $filename
+     * @param string $media
+     * @param bool $ignoreBase
+     * @param null $conditional
      */
     function loadCssFile($filename, $media = 'screen', $ignoreBase = false, $conditional = null)
     {
@@ -87,10 +72,6 @@ class Model3_CssManager
         }
         echo $result;
     }
-
-    /*
-     * Carga los CSS
-     */
 
     public function loadCss()
     {
