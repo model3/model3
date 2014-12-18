@@ -1,0 +1,23 @@
+{
+    "name": "Model3/model3",
+    "description": "The Model3 Framework.",
+    "keywords": ["framework", "model3"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hector Benitez",
+            "email": "hector.benitez.fletes@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "doctrine/orm": "2.3.*"
+
+    },
+    "autoload": {
+        "psr-0": {
+            "Model3": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
