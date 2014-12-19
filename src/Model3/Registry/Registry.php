@@ -6,17 +6,17 @@ use Model3\Exception\Model3Exception;
 
 class Registry extends \ArrayObject
 {
-    private static $_registryClassName = 'Registry';
+    private static $_registryClassName = 'Model3\Registry\Registry';
 
     /**
      * @var Registry
      */
-	private static $_registry = null;
-	
-	/**
-	*
-	* @return Registry $_registry
-	*/
+    private static $_registry = null;
+
+    /**
+     *
+     * @return Registry $_registry
+     */
     public static function getInstance()
     {
         if (self::$_registry === null) {
@@ -30,7 +30,7 @@ class Registry extends \ArrayObject
      * @param Registry $registry
      * @throws Model3Exception
      */
-	public static function setInstance(Registry $registry)
+    public static function setInstance(Registry $registry)
     {
         if (self::$_registry !== null) {
             throw new Model3Exception('Registry already initialized');
@@ -83,11 +83,11 @@ class Registry extends \ArrayObject
         return $instance->offsetGet($index);
     }
 
-	/**
-	* 
-	* @param string $index
-	* @param string $value
-	*/
+    /**
+     *
+     * @param string $index
+     * @param string $value
+     */
     public static function set($index, $value)
     {
         $instance = self::getInstance();
@@ -95,11 +95,11 @@ class Registry extends \ArrayObject
         $instance->offsetSet($index, $value);
     }
 
-	/**
-	*
-	* @param string $index
-	* @return self::$_registry->offsetExists($index)
-	*/
+    /**
+     *
+     * @param string $index
+     * @return self::$_registry->offsetExists($index)
+     */
     public static function isRegistered($index)
     {
         if (self::$_registry === null) {
@@ -108,11 +108,11 @@ class Registry extends \ArrayObject
         return self::$_registry->offsetExists($index);
     }
 
-	/**
-	*
-	* @param string $index
-	* @return bool
-	*/
+    /**
+     *
+     * @param string $index
+     * @return bool
+     */
     public function offsetExists($index)
     {
         return array_key_exists($index, $this);

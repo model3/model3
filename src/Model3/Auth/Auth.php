@@ -51,7 +51,7 @@ class Auth
     /**
      *
      * @param string $element
-     * @return $_SESSION['__M3']['Credentials'] o $_SESSION['__M3']['Credentials'][$element]
+     * @return array
      */
     public static function getCredentials($element = null)
     {

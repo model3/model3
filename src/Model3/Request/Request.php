@@ -332,7 +332,7 @@ class Request
                 $requestUri = $_SERVER['HTTP_X_REWRITE_URL'];
             }
             elseif (
-            // IIS7 with URL Rewrite: make sure we get the unencoded url (double slash problem)
+                // IIS7 with URL Rewrite: make sure we get the unencoded url (double slash problem)
                 isset($_SERVER['IIS_WasUrlRewritten'])
                 && $_SERVER['IIS_WasUrlRewritten'] == '1'
                 && isset($_SERVER['UNENCODED_URL'])

@@ -42,10 +42,10 @@ class Site
                 $cache = new \Doctrine\Common\Cache\ArrayCache;
                 $config = new Configuration;
                 $config->setMetadataCacheImpl($cache);
-                $driverImpl = $config->newDefaultAnnotationDriver($configData['m3_general_db']['base_dir'] . $cnx . '/Entities');
+                $driverImpl = $config->newDefaultAnnotationDriver($data['entities_dir']);
                 $config->setMetadataDriverImpl($driverImpl);
                 $config->setQueryCacheImpl($cache);
-                $config->setProxyDir($configData['m3_general_db']['base_dir'] . $cnx . '/Proxies');
+                $config->setProxyDir($data['proxies_dir']);
                 $config->setProxyNamespace($configData['general']['app_name'] . '\\' . $cnx . '\Proxies');
                 $config->setAutoGenerateProxyClasses(true);
 
@@ -78,7 +78,7 @@ class Site
 
         self::clearPluginList();
 
-        $claseBootstrap = $component . 'Bootstrap';
+        $claseBootstrap = 'App\Bootstrap';
         $bootstrap = new $claseBootstrap;
         $bootstrap->init();
     }
@@ -100,11 +100,11 @@ class Site
 
         if (self::$_request->isModule())
         {
-            $class = self::$_request->getModule() . '_' . self::$_request->getController() . 'Controller';
+            $class = 'App\\Controller\\' . self::$_request->getModule() . '_' . self::$_request->getController() . 'Controller';
         }
         else
         {
-            $class = self::$_request->getController() . 'Controller';
+            $class = 'App\\Controller\\' . self::$_request->getController() . 'Controller';
         }
         if ($carray['general']['debug'])
         {
@@ -217,32 +217,21 @@ class Site
         {
             $absController = self::$_request->getModule() . '_' . self::$_request->getController();
         }
-        $templatefile = 'View/Scripts/' . str_replace("_", "/", $absController) . '/' . self::$_request->getAction() . '.php';
-
-        $path = explode(PATH_SEPARATOR, get_include_path());
-        foreach ($path as $tryThis)
+        $templatefile = '../src/App/View/Scripts/' . str_replace("_", "/", $absController) . '/' . self::$_request->getAction() . '.php';
+        $exists = file_exists($templatefile);
+        if ($exists)
         {
-            $exists = file_exists($tryThis . $templatefile);
-            if ($exists)
-            {
-                include_once($tryThis . $templatefile);
-                break;
-            }
+            include_once($templatefile);
         }
+
 
         if (!$exists)
         {
-            $templatefile = 'View/Scripts/' . str_replace("_", "/", $absController) . '/_default.php';
-
-            $path = explode(PATH_SEPARATOR, get_include_path());
-            foreach ($path as $tryThis)
+            $templatefile = '../src/App/View/Scripts/' . str_replace("_", "/", $absController) . '/_default.php';
+            $exists = file_exists($templatefile);
+            if ($exists)
             {
-                $exists = file_exists($tryThis . $templatefile);
-                if ($exists)
-                {
-                    include_once($tryThis . $templatefile);
-                    break;
-                }
+                include_once($templatefile);
             }
         }
 
