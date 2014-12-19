@@ -6,7 +6,7 @@ use Model3\Exception\Model3Exception;
 
 class Registry extends \ArrayObject
 {
-    private static $_registryClassName = 'Model3_Registry';
+    private static $_registryClassName = 'Registry';
 
     /**
      * @var Registry
@@ -50,7 +50,7 @@ class Registry extends \ArrayObject
      * @param string $registryClassName
      * @throws Model3Exception
      */
-    public static function setClassName($registryClassName = 'Model3_Registry')
+    public static function setClassName($registryClassName = 'Registry')
     {
         if (self::$_registry !== null) {
             throw new Model3Exception('Registry already initialized');
